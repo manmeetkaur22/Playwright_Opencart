@@ -16,7 +16,7 @@ type CustomerRecord = RowDataPacket & {
 
 test("Customer registration is consistent across the storefront, admin, and database @master @regression @db @end-to-end", async ({
   adminPage,
-  homePage,
+  opencartHomePage,
   registerPage,
 }) => {
   const generatedEmail = RandomDataUtil.getEmail();
@@ -36,8 +36,8 @@ test("Customer registration is consistent across the storefront, admin, and data
 
   try {
     await test.step("1) Register a unique customer through the storefront", async () => {
-      await homePage.clickMyAccount();
-      await homePage.clickRegister();
+      await opencartHomePage.clickMyAccount();
+      await opencartHomePage.clickRegister();
       await expect(registerPage.getRegistrationHeading()).toBeVisible();
 
       await registerPage.completeRegistration(customer);

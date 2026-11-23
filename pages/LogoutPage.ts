@@ -5,7 +5,7 @@ export class LogoutPage {
   private readonly continueLink: Locator;
 
   constructor(page: Page) {
-    this.logoutHeading = page.getByRole("main").getByRole("heading", {
+    this.logoutHeading = page.locator("#content").getByRole("heading", {
       name: "Account Logout",
       exact: true,
     });

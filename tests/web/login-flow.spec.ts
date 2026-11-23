@@ -23,8 +23,9 @@ test("Valid customer login @master @sanity @regression @web", async ({
   const customer = {
     firstName: RandomDataUtil.getFirstName(),
     lastName: RandomDataUtil.getLastName(),
-    email: generatedEmail.replace("@", `-${Date.now()}@`),
+    email: generatedEmail.toLowerCase().replace("@", `-${Date.now()}@`),
     password: RandomDataUtil.getPassword(12),
+    telephone: RandomDataUtil.getPhoneNumber(),
   };
 
   await test.step("1) Create a customer for the login test", async () => {

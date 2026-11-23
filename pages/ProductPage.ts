@@ -9,7 +9,7 @@ export class ProductPage {
   constructor(page: Page) {
     this.page = page;
     this.quantityField = page.locator("#input-quantity");
-    this.addToCartButton = page.getByRole("button", { name: "Add to Cart", exact: true });
+    this.addToCartButton = page.getByRole("button", { name: /Add to Cart/ });
     this.addToCartConfirmation = page.locator(".alert-success");
   }
 

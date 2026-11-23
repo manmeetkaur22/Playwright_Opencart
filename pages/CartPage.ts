@@ -39,7 +39,7 @@ export class CartPage {
    * @param productName - Product name in the cart
    */
   getProductUnitPrice(productName: string): Locator {
-    return this.getProductRow(productName).getByRole("cell").nth(3);
+    return this.getProductRow(productName).getByRole("cell").nth(4);
   }
 
   /**
@@ -56,7 +56,7 @@ export class CartPage {
   getGrandTotal(): Locator {
     return this.page
       .getByRole("row")
-      .filter({ has: this.page.getByText("Total", { exact: true }) })
+      .filter({ has: this.page.getByText("Total:", { exact: true }) })
       .getByRole("cell")
       .last();
   }

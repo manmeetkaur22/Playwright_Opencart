@@ -27,8 +27,9 @@ test("Customer registration, login, and shopping journey @master @regression @we
   const customer = {
     firstName: RandomDataUtil.getFirstName(),
     lastName: RandomDataUtil.getLastName(),
-    email: generatedEmail.replace("@", `-${Date.now()}@`),
+    email: generatedEmail.toLowerCase().replace("@", `-${Date.now()}@`),
     password: RandomDataUtil.getPassword(12),
+    telephone: RandomDataUtil.getPhoneNumber(),
   };
   const { productName, productQuantity, totalPrice } = Helper.getProductDetails();
 

@@ -5,6 +5,7 @@ export type CustomerRegistrationData = {
   lastName: string;
   email: string;
   password: string;
+  telephone?: string;
 };
 
 export class RegisterPage {
@@ -15,7 +16,9 @@ export class RegisterPage {
   private readonly firstNameField: Locator;
   private readonly lastNameField: Locator;
   private readonly emailField: Locator;
+  private readonly telephoneField: Locator;
   private readonly passwordField: Locator;
+  private readonly passwordConfirmField: Locator;
   private readonly privacyPolicyCheckbox: Locator;
   private readonly continueButton: Locator;
   private readonly accountCreatedHeading: Locator;
@@ -28,8 +31,10 @@ export class RegisterPage {
     this.firstNameField = page.getByLabel("First Name");
     this.lastNameField = page.getByLabel("Last Name");
     this.emailField = page.getByLabel("E-Mail");
-    this.passwordField = page.getByLabel("Password");
-    this.privacyPolicyCheckbox = page.locator('#form-register input[name="agree"]');
+    this.telephoneField = page.getByLabel("Telephone");
+    this.passwordField = page.getByLabel(/Password$/);
+    this.passwordConfirmField = page.getByLabel("Password Confirm");
+    this.privacyPolicyCheckbox = page.locator('input[name="agree"]');
     this.continueButton = page.getByRole("button", { name: "Continue", exact: true });
     this.accountCreatedHeading = page.getByRole("heading", {
       name: "Your Account Has Been Created!",
@@ -48,7 +53,17 @@ export class RegisterPage {
     await this.firstNameField.fill(customer.firstName);
     await this.lastNameField.fill(customer.lastName);
     await this.emailField.fill(customer.email);
+    if (await this.telephoneField.isVisible()) {
+      if (!customer.telephone) {
+        throw new Error("Telephone is required by the registration form.");
+      }
+
+      await this.telephoneField.fill(customer.telephone);
+    }
     await this.passwordField.fill(customer.password);
+    if (await this.passwordConfirmField.isVisible()) {
+      await this.passwordConfirmField.fill(customer.password);
+    }
     await this.privacyPolicyCheckbox.check();
   }
 

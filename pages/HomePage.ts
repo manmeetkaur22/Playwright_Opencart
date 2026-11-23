@@ -6,6 +6,7 @@ export class HomePage {
   // Locators
   private readonly accountNavigation: Locator;
   private readonly myAccountButton: Locator;
+  private readonly myAccountLink: Locator;
   private readonly registerLink: Locator;
   private readonly loginLink: Locator;
   private readonly logoutLink: Locator;
@@ -17,11 +18,12 @@ export class HomePage {
 
     // Initialize locators with CSS selectors
     this.accountNavigation = page.locator("#top");
-    this.myAccountButton = this.accountNavigation.getByRole("button", { name: "My Account" });
+    this.myAccountButton = this.accountNavigation.getByRole("button", { name: /My Account/ });
+    this.myAccountLink = this.accountNavigation.getByRole("link", { name: /My Account/ });
     this.registerLink = this.accountNavigation.getByRole("link", { name: "Register", exact: true });
     this.loginLink = this.accountNavigation.getByRole("link", { name: "Login", exact: true });
     this.logoutLink = this.accountNavigation.getByRole("link", { name: "Logout", exact: true });
-    this.shoppingCartLink = page.getByRole("link", { name: "Shopping Cart", exact: true });
+    this.shoppingCartLink = page.getByRole("link", { name: /Shopping Cart/ });
     this.searchField = page.getByRole("textbox", { name: "Search" });
   }
 
@@ -29,7 +31,11 @@ export class HomePage {
    * Opens the My Account navigation menu.
    */
   async clickMyAccount(): Promise<void> {
-    await this.myAccountButton.click();
+    if (await this.myAccountButton.count()) {
+      await this.myAccountButton.click();
+    } else {
+      await this.myAccountLink.click();
+    }
   }
 
   /**

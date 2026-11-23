@@ -8,7 +8,7 @@ export class LoginPage {
   private readonly warningMessage: Locator;
 
   constructor(page: Page) {
-    this.loginHeading = page.getByRole("main").getByRole("heading", {
+    this.loginHeading = page.locator("#content").getByRole("heading", {
       name: "Returning Customer",
       exact: true,
     });

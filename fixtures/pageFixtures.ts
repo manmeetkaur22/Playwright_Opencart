@@ -19,20 +19,22 @@ type PageFixtures = {
   homePage: HomePage;
   loginPage: LoginPage;
   logoutPage: LogoutPage;
+  opencartHomePage: HomePage;
   productPage: ProductPage;
   registerPage: RegisterPage;
   searchResultsPage: SearchResultsPage;
 };
 
 const appUrl = process.env.WEB_APP_URL;
+const opencartAppUrl = process.env.OPENCART_APP_URL;
 
 export const test = base.extend<PageFixtures>({
   adminPage: async ({ page }, use) => {
-    if (!appUrl) {
-      throw new Error("WEB_APP_URL must be set to run admin tests.");
+    if (!opencartAppUrl) {
+      throw new Error("OPENCART_APP_URL must be set to run admin tests.");
     }
 
-    const adminUrl = new URL("admin/index.php", appUrl).toString();
+    const adminUrl = new URL("admin/index.php", opencartAppUrl).toString();
     await use(new AdminPage(page, adminUrl));
   },
   accountPage: async ({ page }, use) => {
@@ -54,6 +56,14 @@ export const test = base.extend<PageFixtures>({
   },
   logoutPage: async ({ page }, use) => {
     await use(new LogoutPage(page));
+  },
+  opencartHomePage: async ({ page }, use) => {
+    if (!opencartAppUrl) {
+      throw new Error("OPENCART_APP_URL must be set to run OpenCart database tests.");
+    }
+
+    await page.goto(opencartAppUrl);
+    await use(new HomePage(page));
   },
   productPage: async ({ page }, use) => {
     await use(new ProductPage(page));
